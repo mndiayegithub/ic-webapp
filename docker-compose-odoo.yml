@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  odoo-db:
+    image: postgres:13
+    container_name: odoo-db
+    restart: always
+    ports:
+    - 5444:5432
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes:
+    - pg-odoo:/var/lib/postgresql/data
+
+  odoo-webapp:
+    image: odoo:15
+    container_name: odoo-webapp
+    volumes:
+    - ./extra-addons:/mnt/extra-addons
+    - ./etc:/etc/odoo
+    - data:/var/lib/odoo
+    ports:
+    - 8069:8069
+    depends_on:
+    - odoo-db
+  
+volumes:
+  pg-odoo:
+  data:
