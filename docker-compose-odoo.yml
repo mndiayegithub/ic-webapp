@@ -9,15 +9,16 @@ services:
     environment:
       POSTGRES_USER: odoo
       POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
     volumes:
-    - pg-odoo:/var/lib/postgresql/data
+    - pg-odoo:/var/lib/postgres/data
 
   odoo-webapp:
     image: odoo:15
     container_name: odoo-webapp
     volumes:
     - ./extra-addons:/mnt/extra-addons
-    - ./etc:/etc/odoo
+    - ./config:/etc/odoo
     - data:/var/lib/odoo
     ports:
     - 8069:8069
