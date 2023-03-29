@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: odoo
+        tier: backend
+    spec:
+      containers:
+      - name: odoo-postgres
+        image: postgres:13
+        env: 
+        - name: POSTGRES_USER
+          value: odoo
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pg-odoo-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          value: postgres
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: odoo-postgres
+          mountPath: /var/lib/postgres/data   
+      volumes:
+      - name: odoo-postgres
+        hostPath:
+          path: /data/odoo-postgres

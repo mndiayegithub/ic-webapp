@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: odoo
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: odoo
+        tier: frontend
+    spec:
+      containers:
+      - name: odoo-webapp
+        image: odoo:15
+        ports:
+        - containerPort: 8069
+        volumeMounts:
+        - name: odoo-storage
+          mountPath: /var/lib/odoo
+        - name: odoo-config
+          mountPath: /etc/odoo/odoo.conf
+          subPath: odoo.conf
+        - name: odoo-addons
+          mountPath: /mnt/extra-addons
+      volumes:
+      - name: odoo-storage
+        hostPath:
+          path: /data/odoo
+      - name: odoo-config
+        configMap:
+          name: odoo-config
+      - name: odoo-addons
+        hostPath:
+          path: /data/odoo-addons
