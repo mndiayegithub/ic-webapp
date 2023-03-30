@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+
+  pgadmin-webapp:
+    image: dpage/pgadmin4
+    container_name: pgadmin4-webapp
+    networks:
+      - ic_network_pgadmin
+    restart: always
+    ports:
+    - 5050:80
+    volumes:
+    - ${PWD}/servers.json:/pgadmin4/servers.json
+    - 'pgadmin-data:/var/lib/pgadmin'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mndiayepro97@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+
+
+volumes:
+    pgadmin-data:
+networks:
+  ic_network_pgadmin:
+    driver: bridge
+    name: ic_network_pgadmin
+

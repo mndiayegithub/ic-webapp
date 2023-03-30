@@ -4,10 +4,10 @@ metadata:
   name: ic-webapp-svc
 spec:
   selector:
-    app: pgadmin
+    app: ic-webapp
   type: NodePort
   ports:
   - protocol: TCP
     port: 8080
     targetPort: 80
-    nodePort: 8080
+    nodePort: 30083

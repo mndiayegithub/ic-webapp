@@ -14,6 +14,8 @@ spec:
         app: odoo
         tier: frontend
     spec:
+      securityContext:
+        fsGroup: 101
       containers:
       - name: odoo-webapp
         image: odoo:15
@@ -27,6 +29,18 @@ spec:
           subPath: odoo.conf
         - name: odoo-addons
           mountPath: /mnt/extra-addons
+#        command: [ "sh", "-c", "sleep 1h" ]
+#        lifecycle:
+#          postStart:
+#            exec:
+#              command: ["/bin/sh", "-c", "chown -R odoo:odoo /var/lib/odoo"]
+#      initContainers:
+#      - name: changeowner
+#        image: odoo:15
+        #command: ["/bin/sh", "-c", "chown -R odoo:odoo /var/lib/odoo"]
+        #volumeMounts:
+        #- name: odoo-storage
+        #  mountPath: /var/lib/odoo
       volumes:
       - name: odoo-storage
         hostPath:

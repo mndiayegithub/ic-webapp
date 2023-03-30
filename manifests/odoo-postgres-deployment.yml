@@ -29,10 +29,10 @@ spec:
           value: postgres
         ports:
         - containerPort: 5432
-        volumeMounts:
-        - name: odoo-postgres
-          mountPath: /var/lib/postgres/data   
-      volumes:
-      - name: odoo-postgres
-        hostPath:
-          path: /data/odoo-postgres
+#        volumeMounts:
+#        - name: odoo-postgres
+#          mountPath: /var/lib/postgres/data   
+#      volumes:
+#      - name: odoo-postgres
+#        hostPath:
+#          path: /data/odoo-postgres

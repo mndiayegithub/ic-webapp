@@ -1,0 +1,43 @@
+version: '3.1'
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: always
+    ports:
+    - 5444:5432
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: postgres
+    networks:
+    - ic_network_odoo
+    volumes:
+    - pg-odoo:/var/lib/postgres/data
+
+  odoo-webapp:
+    image: odoo:15
+    container_name: odoo-webapp
+    volumes:
+    - ./extra-addons:/mnt/extra-addons
+    - ./etc:/etc/odoo
+    - odoo-data:/var/lib/odoo
+    networks:
+    - ic_network_odoo
+    ports:
+    - 8069:8069
+    depends_on:
+    - postgres
+    environment:
+    USER: odoo
+    PASSWORD: odoo
+    HOST: postgres
+  
+volumes:
+  pg-odoo:
+  odoo-data:
+
+networks:
+  ic_network_odoo:
+    driver: bridge
+    name: ic_network_odoo
