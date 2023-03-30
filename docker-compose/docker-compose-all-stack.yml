@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     ic-webapp:
-        container_name: ic-webappp
+        container_name: ic-webapp
         image: mndiayepro97/ic-webapp:v1
         ports:
             - 80:8080
