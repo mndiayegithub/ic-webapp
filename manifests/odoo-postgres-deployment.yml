@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deploymentt
+kind: Deployment
 metadata:
   name: odoo-postgres
 spec:
